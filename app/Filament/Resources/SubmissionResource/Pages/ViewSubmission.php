@@ -16,4 +16,5 @@ class ViewSubmission extends ViewRecord
             Actions\EditAction::make(),
         ];
     }
+
 }
