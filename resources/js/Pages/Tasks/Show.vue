@@ -1,6 +1,7 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import {Head} from '@inertiajs/vue3';
+import Submit from "@/Pages/Tasks/Partials/Submit.vue";
 
 const props = defineProps({
     task: Object,
@@ -26,6 +27,7 @@ const props = defineProps({
                         <div v-if="task.image_path">
                             <img :src="task.image_path" alt="Task Image" class="max-w-full h-auto mt-4"/>
                         </div>
+                        <Submit :task="task"/>
                     </div>
                 </div>
             </div>

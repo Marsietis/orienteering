@@ -17,8 +17,9 @@ class Task extends Model
         'image_path',
     ];
 
-    public function getImageUrlAttribute(): ?string
+    public function submissions(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
-        return $this->image_path ? Storage::url($this->image_path) : null;
+        return $this->hasMany(Submission::class);
     }
+    
 }
