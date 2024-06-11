@@ -24,7 +24,7 @@ class TasksController extends Controller
     public function storeSubmission(Request $request, Task $task)
     {
         $request->validate([
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif',
+            'image' => 'required|image|mimes:jpeg,png,jpg',
         ]);
 
         $imagePath = $request->file('image')->store('submissions', 'public');
@@ -33,11 +33,6 @@ class TasksController extends Controller
             'user_id' => auth()->id(),
             'task_id' => $task->id,
             'image_path' => $imagePath,
-        ]);
-
-        return Inertia::render('Tasks/Show', [
-            'task' => $task,
-            'success' => 'Submission created successfully!',
         ]);
     }
 }
