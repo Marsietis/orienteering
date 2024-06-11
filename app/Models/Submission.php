@@ -14,6 +14,7 @@ class Submission extends Model
         'task_id',
         'image_path',
         'status',
+        'comments',
     ];
 
     public function user(): \Illuminate\Database\Eloquent\Relations\BelongsTo

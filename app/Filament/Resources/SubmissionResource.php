@@ -36,6 +36,8 @@ class SubmissionResource extends Resource
                     ->required()
                     ->maxLength(255)
                     ->default('pending'),
+                Forms\Components\Textarea::make('comments')
+                    ->columnSpanFull(),
             ]);
     }
 
