@@ -7,6 +7,13 @@ const props = defineProps({
     solvedTasksCount: Number,
     user: Object,
 });
+
+const getStatusClass = (status) => ({ // Use an object for easier class lookup
+    'approved': 'bg-green-500',
+    'pending': 'bg-yellow-500',
+    'rejected': 'bg-red-500', // Corrected typo
+}[status] || 'text-gray-500');
+
 </script>
 
 <template>
@@ -44,6 +51,12 @@ const props = defineProps({
                                 <div
                                     class="task-content p-6 text-black text-2xl text-center font-bold hover:text-blue-500 border-b-2 border-transparent border-blue-200 hover:border-blue-500">
                                     {{ task.title }}
+                                    <span
+                                        v-if="task.submissions.length > 0"
+                                        class="text-sm text-white rounded-full px-2 py-1 ml-2 capitalize"
+                                        :class="getStatusClass(task.submissions[0].status)">
+                                            {{ task.submissions[0].status }}
+                                        </span>
                                 </div>
                             </Link>
                         </div>
