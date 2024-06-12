@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Submission;
 use App\Models\Task;
 use Inertia\Inertia;
 
@@ -11,7 +12,9 @@ class DashboardController extends Controller
     {
         $tasks = Task::all();
         $user = auth()->user();
-        $solvedTasksCount = $user->submissions()->where('status', 'accepted')->count();
+        $solvedTasksCount = Submission::where('user_id', $user->id)
+            ->where('status', 'approved')
+            ->count();
         return Inertia::render('Dashboard', [
             'tasks' => $tasks,
             'solvedTasksCount' => $solvedTasksCount,
