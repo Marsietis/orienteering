@@ -91,17 +91,17 @@ class SubmissionResource extends Resource
             ])
             ->actions([
                 Tables\Actions\ViewAction::make(),
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\EditAction::make()->label('Review'),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+                    Tables\Actions\DeleteBulkAction::make()->requiresConfirmation(),
                     Tables\Actions\BulkAction::make('Mark as approved')
-                        ->action(fn($records) => $records->each->update(['status' => 'approved'])),
+                        ->action(fn($records) => $records->each->update(['status' => 'approved']))->requiresConfirmation(),
                     Tables\Actions\BulkAction::make('Mark as Rejected')
-                        ->action(fn($records) => $records->each->update(['status' => 'rejected'])),
+                        ->action(fn($records) => $records->each->update(['status' => 'rejected']))->requiresConfirmation(),
                     Tables\Actions\BulkAction::make('Mark as Pending')
-                        ->action(fn($records) => $records->each->update(['status' => 'pending'])),
+                        ->action(fn($records) => $records->each->update(['status' => 'pending']))->requiresConfirmation(),
                 ]),
             ])
             ->groups([
@@ -122,7 +122,7 @@ class SubmissionResource extends Resource
         return [
             'index' => Pages\ListSubmissions::route('/'),
             'view' => Pages\ViewSubmission::route('/{record}'),
-            'edit' => Pages\EditSubmission::route('/{record}/edit'),
+//            'edit' => Pages\EditSubmission::route('/{record}/edit'),
         ];
     }
 
