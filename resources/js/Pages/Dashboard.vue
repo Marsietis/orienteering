@@ -43,10 +43,10 @@ const getStatusClass = (status) => ({ // Use an object for easier class lookup
 
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                <div class="overflow-hidden">
                     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-8">
                         <div v-for="task in tasks" :key="task.id"
-                             class="task-card bg-white rounded-lg shadow-2xl overflow-hidden transition-transform duration-300 hover:scale-105">
+                             class="task-card bg-white rounded-lg shadow-xl overflow-hidden transition-transform duration-300 hover:scale-105">
                             <Link :href="route('tasks.show', { id: task.id })">
                                 <div
                                     class="task-content p-6 text-black text-2xl text-center font-bold hover:text-blue-500 border-b-2 border-transparent border-blue-200 hover:border-blue-500">
