@@ -16,8 +16,15 @@ class TasksController extends Controller
         if ($task->image_path) {
             $task->image_path = Storage::url($task->image_path);
         }
+        $userSubmissions = Submission::where('user_id', auth()->id())
+            ->where('task_id', $task->id)
+            ->get();
+        foreach ($userSubmissions as $submission) {
+            $submission->image_path = Storage::url($submission->image_path);
+        }
         return Inertia::render('Tasks/Show', [
             'task' => $task,
+            'userSubmissions' => $userSubmissions,
         ]);
     }
 

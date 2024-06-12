@@ -6,6 +6,7 @@ import InputError from "@/Components/InputError.vue";
 const imageInput = ref(null);
 const props = defineProps({
     task: Object,
+    userSubmissions: Object,
 });
 
 const form = useForm({
@@ -32,34 +33,44 @@ const clearImageInput = () => {
 </script>
 
 <template>
-    <form @submit.prevent="submit">
-        <div class="relative">
-            <input
-                type="file"
-                ref="imageInput"
-                accept="image/*"
-                @input="form.image = $event.target.files[0]"
-                class="block w-full text-sm text-slate-500
+    <!--    Only show the form if there are no pending or approved submissions -->
+    <div
+        v-if="userSubmissions.length === 0 || userSubmissions.every(submission => submission.status !== 'pending' && submission.status !== 'approved')">
+        <form @submit.prevent="submit">
+            <div class="relative">
+                <input
+                    type="file"
+                    ref="imageInput"
+                    accept="image/*"
+                    @input="form.image = $event.target.files[0]"
+                    class="block w-full text-sm text-slate-500
             file:mr-4 file:py-2 file:px-4
             file:rounded-full file:border-0
             file:text-sm file:font-semibold
             file:bg-violet-50 file:text-violet-700
             hover:file:bg-violet-100"
-            />
-        </div>
-        <br>
-        <button type="button" @click="clearImageInput" :disabled="!form.image">Clear</button>
-        <br>
-        <button type="submit">Submit Image</button>
-        <InputError class="mt-2" :message="form.errors.image"/>
+                />
+            </div>
+            <br>
+            <button type="button" @click="clearImageInput" :disabled="!form.image">Clear</button>
+            <br>
+            <button type="submit">Submit Image</button>
+            <InputError class="mt-2" :message="form.errors.image"/>
 
-        <Transition
-            enter-active-class="transition ease-in-out"
-            enter-from-class="opacity-0"
-            leave-active-class="transition ease-in-out"
-            leave-to-class="opacity-0"
-        >
-            <p v-if="form.recentlySuccessful" class="text-xl text-green-600">Saved.</p>
-        </Transition>
-    </form>
+            <Transition
+                enter-active-class="transition ease-in-out"
+                enter-from-class="opacity-0"
+                leave-active-class="transition ease-in-out"
+                leave-to-class="opacity-0"
+            >
+                <p v-if="form.recentlySuccessful" class="text-xl text-green-600">Saved.</p>
+            </Transition>
+        </form>
+    </div>
+    <div v-else-if="userSubmissions.some(submission => submission.status === 'pending')">
+        <p>Your submission is waiting for review.</p>
+    </div>
+    <div v-else>
+        <p>You have already solved this task.</p>
+    </div>
 </template>
