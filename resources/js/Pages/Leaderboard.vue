@@ -26,7 +26,7 @@ const props = defineProps({
                             <SecondaryButton class="mt-3 mb-5">Refresh</SecondaryButton>
                         </Link>
                         <table class="min-w-full divide-y divide-gray-200 rounded-xl overflow-hidden shadow-xl">
-                            <thead class="bg-blue-100">
+                            <thead class="bg-gray-100">
                             <tr>
                                 <th scope="col"
                                     class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Rank
