@@ -2,9 +2,11 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import {Head} from '@inertiajs/vue3';
 import Submit from "@/Pages/Tasks/Partials/Submit.vue";
+import ListSubmissions from "@/Pages/Tasks/Partials/ListSubmissions.vue";
 
 const props = defineProps({
     task: Object,
+    userSubmissions: Object,
 });
 </script>
 
@@ -27,7 +29,11 @@ const props = defineProps({
                         <div v-if="task.image_path">
                             <img :src="task.image_path" alt="Task Image" class="max-w-full h-auto mt-4"/>
                         </div>
-                        <Submit :task="task"/>
+                        <Submit :task="task" :userSubmissions="userSubmissions"/>
+                        <div>
+                            <h3 class="font-semibold text-lg text-gray-800 leading-tight mt-8">Submissions</h3>
+                            <ListSubmissions :task="task" :userSubmissions="userSubmissions"/>
+                        </div>
                     </div>
                 </div>
             </div>

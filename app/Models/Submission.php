@@ -26,31 +26,4 @@ class Submission extends Model
     {
         return $this->belongsTo(Task::class);
     }
-
-    public function isPending(): bool
-    {
-        return $this->status === 'pending';
-    }
-
-    public function isApproved(): bool
-    {
-        return $this->status === 'approved';
-    }
-
-    public function isRejected(): bool
-    {
-        return $this->status === 'rejected';
-    }
-
-    public function approve(): void
-    {
-        $this->status = 'approved';
-        $this->save();
-    }
-
-    public function reject(): void
-    {
-        $this->status = 'rejected';
-        $this->save();
-    }
 }
