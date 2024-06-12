@@ -122,7 +122,7 @@ class SubmissionResource extends Resource
         return [
             'index' => Pages\ListSubmissions::route('/'),
             'view' => Pages\ViewSubmission::route('/{record}'),
-//            'edit' => Pages\EditSubmission::route('/{record}/edit'),
+            'edit' => Pages\EditSubmission::route('/{record}/edit'),
         ];
     }
 
