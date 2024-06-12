@@ -35,4 +35,11 @@ class TasksController extends Controller
             'image_path' => $imagePath,
         ]);
     }
+
+    public static function increaseSolveCount($id)
+    {
+        $task = Task::findOrFail($id);
+        $task->solve_count++;
+        $task->save();
+    }
 }

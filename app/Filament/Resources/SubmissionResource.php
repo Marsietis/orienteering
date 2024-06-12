@@ -5,6 +5,7 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\SubmissionResource\Pages;
 use App\Models\Submission;
 use Filament\Forms;
+use Filament\Forms\Components\Hidden;
 use Filament\Forms\Form;
 use Filament\Infolists;
 use Filament\Infolists\Infolist;
@@ -23,8 +24,18 @@ class SubmissionResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('user.name'),
-                Forms\Components\TextInput::make('task.title'),
+                Forms\Components\Select::make('user_id')
+                    ->relationship('user', 'name')
+                    ->disabled()
+                    ->required(),
+                Forms\Components\Select::make('task_id')
+                    ->relationship('task', 'title')
+                    ->disabled()
+                    ->required(),
+                Forms\Components\FileUpload::make('image_path')
+                    ->image()
+                    ->disabled()
+                    ->required(),
                 Forms\Components\ToggleButtons::make('status')
                     ->options([
                         'approved' => 'Approved',
@@ -33,9 +44,10 @@ class SubmissionResource extends Resource
                     ->colors([
                         'approved' => 'success',
                         'rejected' => 'danger',
-                    ]),
+                    ])
+                    ->columnSpanFull(),
                 Forms\Components\Textarea::make('comments')
-                    ->columnSpanFull()->rows(10),
+                    ->columnSpanFull(),
             ]);
     }
 

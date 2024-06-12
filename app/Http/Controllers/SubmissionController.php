@@ -9,7 +9,6 @@ class SubmissionController extends Controller
 {
     public static function addPoints($userId, $taskId)
     {
-        dd($userId, $taskId);
         // Add points to the user
         $user = User::find($userId);
         $task = Task::find($taskId);
