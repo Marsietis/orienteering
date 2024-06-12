@@ -15,8 +15,11 @@ class LeaderboardController extends Controller
             ->orderBy('updated_at')
             ->get();
 
+        $current_user = auth()->user();
+
         return Inertia::render('Leaderboard', [
-            'users' => $users
+            'users' => $users,
+            'current_user' => $current_user,
         ]);
     }
 }
