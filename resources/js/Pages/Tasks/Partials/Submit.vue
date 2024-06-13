@@ -45,7 +45,7 @@ const clearImageInput = () => {
                         ref="imageInput"
                         accept="image/*"
                         @input="form.image = $event.target.files[0]"
-                        class="text-sm text-gray-500 file:mr-2 file:py-1.5 file:px-3 file:rounded    file:border-0 file:text-sm file:font-medium file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
+                        class="text-sm text-gray-500 file:mr-2 file:py-1.5 file:px-3 file:rounded-full file:border-0 file:text-sm file:font-medium file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
                     />
                     <button
                         @click="clearImageInput"
@@ -55,7 +55,7 @@ const clearImageInput = () => {
                   </span>
                 </div>
 
-                <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-4 rounded-lg">
+                <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-4 rounded-xl">
                     Submit Image
                 </button>
 

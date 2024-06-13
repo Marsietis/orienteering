@@ -68,7 +68,7 @@ function handleImageError() {
 
                 <div class="flex justify-center">
                     <a :href="route('register')">
-                        <button class="bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded-md mt-6">
+                        <button class="bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-4 rounded-xl">
                             Spausk čia ir pradėk
                         </button>
                     </a>
