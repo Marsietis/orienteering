@@ -6,6 +6,7 @@ import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
 import {Head, Link, useForm} from '@inertiajs/vue3';
 import {ref} from "vue";
+import SecondaryButton from "@/Components/SecondaryButton.vue";
 
 const form = useForm({
     name: '',
@@ -36,6 +37,10 @@ const addMember = () => {
     if (newMemberName.value.trim() !== '' && form.members.length < 6) {
         form.members.push(newMemberName.value);
         newMemberName.value = '';
+    } else if (form.members.length >= 6) {
+        form.setError('members', 'The team can have a maximum of 6 members.');
+    } else if (newMemberName.value.trim() === '') {
+        form.setError('members', 'Enter the team member\'s name.');
     }
 };
 
@@ -144,8 +149,8 @@ const submit = () => {
             </div>
 
             <div v-if="step === 2">
-                <div>
-                    <InputLabel for="newMemberName" value="Member's name"/>
+                <InputLabel for="newMemberName" value="Team member's name"/>
+                <div class="flex items-center">
 
                     <TextInput
                         id="newMemberName"
@@ -154,27 +159,30 @@ const submit = () => {
                         v-model="newMemberName"
                     />
 
-                    <PrimaryButton type="button" class="mt-4" @click="addMember">
-                        Add Member
-                    </PrimaryButton>
-
-                    <InputError class="mt-2" :message="form.errors.members"/>
+                    <SecondaryButton type="button" class="mt-1 ml-2" @click="addMember">
+                        + Add Member
+                    </SecondaryButton>
                 </div>
+
+                <InputError class="mt-2" :message="form.errors.members"/>
 
                 <div class="mt-4">
                     <h3>Team Members</h3>
                     <ul>
                         <li v-for="(member, index) in form.members" :key="index">
                             {{ member }}
-                            <button type="button" @click="removeMember(index)">Remove</button>
+                            <a @click="removeMember(index)"
+                               class="text-red-500 hover:text-red-600 hover:underline ml-2">
+                                Remove
+                            </a>
                         </li>
                     </ul>
                 </div>
 
                 <div class="flex items-center justify-between mt-4">
-                    <PrimaryButton type="button" class="me-4" @click="previousStep">
+                    <SecondaryButton type="button" class="me-4" @click="previousStep">
                         Previous
-                    </PrimaryButton>
+                    </SecondaryButton>
 
                     <PrimaryButton class="ms-4" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
                         Register

@@ -19,22 +19,26 @@ const props = defineProps({
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">{{ task.title }}</h2>
         </template>
 
-        <div class="py-12">
-            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                    <div class="p-6 text-gray-900">
-                        <p>{{ task.description }}</p>
-                        <p>Points: {{ task.points }}</p>
-                        <p>Solved by: {{ task.solve_count }}</p>
-                        <div v-if="task.image_path">
-                            <img :src="task.image_path" alt="Task Image" class="max-w-full h-auto mt-4"/>
-                        </div>
-                        <Submit :task="task" :userSubmissions="userSubmissions"/>
-                        <div>
-                            <h3 class="font-semibold text-lg text-gray-800 leading-tight mt-8">Submissions</h3>
-                            <ListSubmissions :task="task" :userSubmissions="userSubmissions"/>
-                        </div>
-                    </div>
+        <div class="bg-gray-50 flex flex-col items-center justify-center py-12">
+            <div class="max-w-3xl w-full bg-white rounded-lg shadow-lg overflow-hidden p-8">
+
+                <h2 class="text-2xl font-semibold text-gray-800 mb-4">{{ task.description }}</h2>
+                <div class="flex justify-between items-center mb-6 text-gray-600">
+                      <span
+                          class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                            Points: {{ task.points }}
+                    </span>
+                    <span class="text-sm">Solved by: {{ task.solve_count }} teams</span>
+                </div>
+
+                <div v-if="task.image_path" class="mb-6">
+                    <img :src="task.image_path" alt="Task Image" class="w-full rounded-md shadow-md"/>
+                </div>
+
+                <Submit :task="task" :userSubmissions="userSubmissions" class="mb-8"/>
+
+                <div>
+                    <ListSubmissions :task="task" :userSubmissions="userSubmissions"/>
                 </div>
             </div>
         </div>

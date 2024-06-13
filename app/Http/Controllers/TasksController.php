@@ -17,7 +17,7 @@ class TasksController extends Controller
             $task->image_path = Storage::url($task->image_path);
         }
         $userSubmissions = Submission::where('user_id', auth()->id())
-            ->where('task_id', $task->id)
+            ->where('task_id', $task->id)->orderBy('created_at', 'desc')
             ->get();
         foreach ($userSubmissions as $submission) {
             $submission->image_path = Storage::url($submission->image_path);
