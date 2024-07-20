@@ -1,11 +1,13 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import {Head, Link} from '@inertiajs/vue3';
+import CountdownTimer from '@/Components/CountdownTimer.vue';
 
 const props = defineProps({
     tasks: Array,
     solvedTasksCount: Number,
     user: Object,
+    eventEndDateTime: String,
 });
 
 const getStatusClass = (status) => ({ // Use an object for easier class lookup
@@ -27,6 +29,7 @@ const getStatusClass = (status) => ({ // Use an object for easier class lookup
         <div class="py-4">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="bg-white overflow-hidden shadow-lg rounded-lg">
+                    <CountdownTimer :eventEndDateTime="eventEndDateTime" />
                     <div class="flex flex-col sm:flex-row items-center justify-center p-6 text-center sm:text-left">
                         <h1 class="text-3xl sm:text-4xl font-extrabold text-black mb-2 sm:mb-0">{{ user.name }}</h1>
                         <div class="sm:ml-8">

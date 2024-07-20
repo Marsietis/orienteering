@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Events;
 use App\Models\Submission;
 use App\Models\Task;
 use Inertia\Inertia;
@@ -19,10 +20,13 @@ class DashboardController extends Controller
             ->where('status', 'approved')
             ->count();
 
+        $eventEndDateTime = Events::where('end_date', '>', now())->first();
+
         return Inertia::render('Dashboard', [
             'tasks' => $tasks,
             'solvedTasksCount' => $solvedTasksCount,
             'user' => $user,
+            'eventEndDateTime' => $eventEndDateTime,
         ]);
     }
 }
