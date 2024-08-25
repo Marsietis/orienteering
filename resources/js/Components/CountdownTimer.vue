@@ -1,7 +1,14 @@
 <template>
     <div>
-        <p v-if="!eventEnded">{{ hours }}h {{ minutes }}m {{ seconds }}s</p>
-        <p v-else class="ended-message">Varžybos baigėsi / Event ended</p>
+        <p v-if="!eventEnded && !eventStarted">
+            Competition starts in:
+            <span class="block"> {{ days }}d {{ hours }}h {{ minutes }}m {{ seconds }}s</span>
+        </p>
+        <p v-if="!eventEnded && eventStarted">
+            Event ends in:
+            <span class="block"> {{ days }}d {{ hours }}h {{ minutes }}m {{ seconds }}s</span>
+        </p>
+        <p v-if="eventEnded" class="ended-message">Varžybos baigėsi / Competition ended</p>
     </div>
 </template>
 
@@ -11,43 +18,60 @@ export default {
         eventEndDateTime: {
             type: Object,
             required: true,
-            default: () => ({ end_date: new Date() }) // Provide a default object to avoid null issues
+            default: () => ({start_date: new Date(), end_date: new Date()}) // Default start and end dates
         },
     },
     data() {
         return {
-            targetTime: this.eventEndDateTime ? new Date(this.eventEndDateTime.end_date).getTime() : new Date().getTime(),
+            startTime: this.eventEndDateTime ? new Date(this.eventEndDateTime.start_date).getTime() : new Date().getTime(),
+            endTime: this.eventEndDateTime ? new Date(this.eventEndDateTime.end_date).getTime() : new Date().getTime(),
             currentTime: new Date().getTime(),
             intervalId: null,
             days: 0,
             hours: 0,
             minutes: 0,
             seconds: 0,
+            eventStarted: false,
             eventEnded: false,
         };
     },
     methods: {
         updateCountdown() {
-            if (!this.eventEndDateTime || !this.eventEndDateTime.end_date) {
-                // Handle case where eventEndDateTime or end_date is not properly provided
-                this.eventEnded = true; // Set to true to avoid infinite loop
-                return;
-            }
-
             this.currentTime = new Date().getTime();
-            const timeLeft = this.targetTime - this.currentTime;
 
-            if (timeLeft < 0) {
+            // Check if the event has started
+            if (this.currentTime < this.startTime) {
+                // Event hasn't started yet, countdown to start time
+                this.eventStarted = false;
+                const timeLeft = this.startTime - this.currentTime;
+
+                if (timeLeft < 0) {
+                    this.eventStarted = true; // Event has started
+                } else {
+                    this.days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+                    this.hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                    this.minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+                    this.seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+                }
+            } else if (this.currentTime < this.endTime) {
+                // Event has started but not ended yet, countdown to end time
+                this.eventStarted = true;
+                const timeLeft = this.endTime - this.currentTime;
+
+                if (timeLeft < 0) {
+                    clearInterval(this.intervalId);
+                    this.eventEnded = true;
+                } else {
+                    this.days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+                    this.hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                    this.minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+                    this.seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+                }
+            } else {
+                // Event has ended
                 clearInterval(this.intervalId);
                 this.eventEnded = true;
-                return;
             }
-
-            this.eventEnded = false; // Ensure the event is not marked as ended when there's still time
-            this.days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
-            this.hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            this.minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
-            this.seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
         },
     },
     mounted() {
