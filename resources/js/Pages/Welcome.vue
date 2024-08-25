@@ -29,53 +29,59 @@ function handleImageError() {
 
 <template>
     <Head title="Welcome"/>
-    <nav v-if="canLogin" class="flex space-x-4 justify-end text-lg mt-4 lg:mt-0  bg-gray-200">
-        <Link v-if="$page.props.auth.user" :href="route('dashboard')" class="link">Dashboard</Link>
-        <template v-else>
-            <Link :href="route('login')" class="link">Log in</Link>
-            <Link v-if="canRegister" :href="route('register')" class="link">Register</Link>
-        </template>
-    </nav>
-    <div
-        class="min-h-screen flex flex-col items-center justify-center bg-gray-200 text-gray-800">
-        <div class="container mx-auto max-w-7xl px-6 py-10 lg:py-20">
-            <header class="flex flex-col items-center justify-center mb-10">
-                <ApplicationLogo class="h-32 lg:h-40"/>
+    <div class="min-h-screen flex flex-col items-center justify-center bg-gray-200 text-gray-800">
+        <div class="container mx-auto max-w-full sm:max-w-7xl px-4 sm:px-6 py-6 sm:py-10 lg:py-20">
+            <header class="flex flex-col items-center justify-center mb-6 sm:mb-10">
+                <!-- Apply responsive max-width and max-height -->
+                <ApplicationLogo class="max-w-xs sm:max-w-sm lg:max-w-md max-h-40"/>
             </header>
 
-            <main class="bg-white rounded-lg p-8 shadow-lg">
-                <h1 class="text-3xl font-bold mb-4">Orientacinės varžybos</h1>
-                <p class="text-lg mb-6">rugsėjo 4 d. 13:00 - 15:30</p>
+            <main class="bg-white rounded-lg p-6 sm:p-8 shadow-lg">
+                <h1 class="text-2xl sm:text-3xl font-bold mb-4">VU SA KnF Orientacinės varžybos / VU SR KnF Orienteering competition</h1>
+                <p class="text-base sm:text-lg mb-4 sm:mb-6">rugsėjo 5 d. 17:00 - 19:30 / 5 September 17:00 - 19:30</p>
 
                 <div class="space-y-4">
+                    <p>[EN Below]</p>
+
                     <p>Labas, dalyvi (-e)!</p>
-                    <p>Prieš pradėdami žaisti, šias sąlygas privalote įgyvendinti visose užduotyse. Užduotys, kurių
+                    <p>Prieš pradėdami žaisti, susipažinkite su sąlygomis, kurias privalote įgyvendinti visose užduotyse. Užduotys, kurių
                         atsakymuose šios sąlygos nebus įgyvendintos, žaidimo vertintojai vertins 0 taškų.</p>
                     <ul class="list-disc list-inside space-y-2">
-                        <li>Kiekvienoje nuotraukoje privaloma laikyti batoną. (Pavyzdys pateiktas žemiau esančioje
-                            nuotraukoje.) Batonas privalo būti tikras, batonų, rodomų telefone, neužskaitysime.
-                            <img src="/storage/example.png" alt="Batonas" class="mx-auto mt-4"/>
+                        <li>Kiekvienoje nuotraukoje <b>privaloma laikyti batoną</b>. (Pavyzdys pateiktas žemiau esančioje
+                            nuotraukoje.) Batonas privalo būti tikras, batonų, rodomų telefone, neužskaitysime
                         </li>
-                        <li>Visose įkeltose nuotraukose privalo būti matomas TAS PATS KOMANDOS NARYS. Nuotraukose,
-                            kuriose yra kitas žmogus - neužskaitysime. Pastebėjus sukčiavimą, specialiai
-                            piktnaudžiaujanti komanda bus diskvalifikuota.
+                        <li>Visose įkeltose nuotraukose privalo būti matomas <b>TAS PATS KOMANDOS NARYS</b>. Nuotraukose,
+                            kuriose yra kitas žmogus - neužskaitysime. Pastebėjus sukčiavimą komanda bus diskvalifikuota.
                         </li>
                     </ul>
                 </div>
-
-                <p class="mt-4">Atsakymai priimami iki 15:30</p>
+                <p class="mt-4">Atsakymai priimami iki 19:30</p>
                 <p class="mt-2">Sėkmės!</p>
 
-                <div class="flex justify-center">
+                <div class="space-y-4">
+                    <p>--</p>
+                    <p>Hello, participant!</p>
+                    <p>Before you start playing, please read the conditions that you must meet in all the tasks. Any task that does not meet these conditions will be scored 0 points by the evaluators.</p>
+                    <ul class="list-disc list-inside space-y-2">
+                        <li>You must <b>hold a baguette</b> in each photo. (An example is shown in the photo below.) The baguette must be real, baguettes shown on the phone will not be counted.</li>
+                        <li>All uploaded photos must feature <b>THE SAME TEAM MEMBER</b>. We will not credit photos that include another person. If cheating is detected the team will be disqualified.</li>
+                    </ul>
+                </div>
+                <p class="mt-4">Submissions will be accepted until 19:30</p>
+                <p class="mt-2">Good luck!</p>
+                <img src="/storage/example.png" alt="Batonas" class="mx-auto mt-4 max-w-full"/>
+
+                <div class="flex justify-center mt-6">
                     <a :href="route('register')">
-                        <button class="bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-4 rounded-xl">
-                            Spausk čia ir pradėk
+                        <button
+                            class="bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-4 rounded-xl text-sm sm:text-base">
+                            Spausk čia ir pradėk / Click here to start
                         </button>
                     </a>
                 </div>
             </main>
 
-            <footer class="mt-10 text-center text-sm text-gray-500">
+            <footer class="mt-6 sm:mt-10 text-center text-sm text-gray-500">
                 2024 VUSA KnF
             </footer>
         </div>
