@@ -1,16 +1,23 @@
 <template>
-    <div>
-        <p v-if="!eventEnded && !eventStarted">
-            Competition starts in:
-            <span class="block"> {{ days }}d {{ hours }}h {{ minutes }}m {{ seconds }}s</span>
+    <div class="countdown-container">
+        <p v-if="!eventEnded && !eventStarted" :class="{ 'countdown-starting-soon': isStartingSoon }">
+            COMPETITION STARTS IN:
+            <span class="countdown-time">
+                <span v-if="days > 0">{{ days }}d </span>
+                {{ hours }}h {{ minutes }}m {{ seconds }}s
+            </span>
         </p>
-        <p v-if="!eventEnded && eventStarted">
-            Event ends in:
-            <span class="block"> {{ days }}d {{ hours }}h {{ minutes }}m {{ seconds }}s</span>
+        <p v-if="!eventEnded && eventStarted" :class="{ 'countdown-ending-soon': isEndingSoon }">
+            COMPETITION ENDS IN:
+            <span class="countdown-time">
+                <span v-if="days > 0">{{ days }}d </span>
+                {{ hours }}h {{ minutes }}m {{ seconds }}s
+            </span>
         </p>
-        <p v-if="eventEnded" class="ended-message">Varžybos baigėsi / Competition ended</p>
+        <p v-if="eventEnded" class="ended-message">VARŽYBOS BAIGĖSI / COMPETITION ENDED</p>
     </div>
 </template>
+
 
 <script>
 export default {
@@ -18,7 +25,7 @@ export default {
         eventEndDateTime: {
             type: Object,
             required: true,
-            default: () => ({start_date: new Date(), end_date: new Date()}) // Default start and end dates
+            default: () => ({start_date: new Date(), end_date: new Date()})
         },
     },
     data() {
@@ -33,45 +40,47 @@ export default {
             seconds: 0,
             eventStarted: false,
             eventEnded: false,
+            isStartingSoon: false,
+            isEndingSoon: false,
         };
     },
     methods: {
         updateCountdown() {
             this.currentTime = new Date().getTime();
 
-            // Check if the event has started
             if (this.currentTime < this.startTime) {
-                // Event hasn't started yet, countdown to start time
                 this.eventStarted = false;
                 const timeLeft = this.startTime - this.currentTime;
 
+                this.isStartingSoon = timeLeft <= 1000 * 60 * 10;
+
                 if (timeLeft < 0) {
-                    this.eventStarted = true; // Event has started
+                    this.eventStarted = true;
                 } else {
-                    this.days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
-                    this.hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                    this.minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
-                    this.seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+                    this.updateTimeValues(timeLeft);
                 }
             } else if (this.currentTime < this.endTime) {
-                // Event has started but not ended yet, countdown to end time
                 this.eventStarted = true;
                 const timeLeft = this.endTime - this.currentTime;
+
+                this.isEndingSoon = timeLeft <= 1000 * 60 * 10;
 
                 if (timeLeft < 0) {
                     clearInterval(this.intervalId);
                     this.eventEnded = true;
                 } else {
-                    this.days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
-                    this.hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                    this.minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
-                    this.seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+                    this.updateTimeValues(timeLeft);
                 }
             } else {
-                // Event has ended
                 clearInterval(this.intervalId);
                 this.eventEnded = true;
             }
+        },
+        updateTimeValues(timeLeft) {
+            this.days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+            this.hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            this.minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+            this.seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
         },
     },
     mounted() {
@@ -85,17 +94,49 @@ export default {
 </script>
 
 <style scoped>
-p {
-    font-size: 2em;
+.countdown-container {
     text-align: center;
+    padding: 20px;
+}
+
+p {
+    font-size: 1.5em;
     margin: 0;
+    transition: color 0.5s ease, transform 0.5s ease;
+    line-height: 1.4;
+}
+
+.countdown-time {
+    display: block;
+    font-size: 2em;
+    font-weight: bold;
+}
+
+.countdown-starting-soon {
+    color: #4caf50; /* Green */
+    animation: pulse 1s infinite;
+}
+
+.countdown-ending-soon {
+    color: #f44336; /* Red */
+    animation: pulse 1s infinite;
 }
 
 .ended-message {
-    font-size: 2em;
-    color: red;
-    text-align: center;
-    margin: 0;
+    font-size: 1.5em;
+    color: #f44336; /* Red */
     font-weight: bold;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+    100% {
+        transform: scale(1);
+    }
 }
 </style>
