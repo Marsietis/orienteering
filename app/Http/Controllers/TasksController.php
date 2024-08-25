@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Events;
 use App\Models\Submission;
 use App\Models\Task;
 use Illuminate\Support\Facades\Storage;
@@ -22,6 +23,14 @@ class TasksController extends Controller
         foreach ($userSubmissions as $submission) {
             $submission->image_path = Storage::url($submission->image_path);
         }
+
+        $eventEndDateTime = Events::where('end_date', '>', now())->first();
+        $eventStartDateTime = Events::where('start_date', '<', now())->first();
+
+        if ($eventStartDateTime == null || $eventEndDateTime == null) {
+            return redirect()->to('dashboard')->with('error', 'Competition is not active');
+        }
+
         return Inertia::render('Tasks/Show', [
             'task' => $task,
             'userSubmissions' => $userSubmissions,
@@ -30,6 +39,13 @@ class TasksController extends Controller
 
     public function storeSubmission(Request $request, Task $task)
     {
+        $eventEndDateTime = Events::where('end_date', '>', now())->first();
+        $eventStartDateTime = Events::where('start_date', '<', now())->first();
+
+        if ($eventStartDateTime == null || $eventEndDateTime == null) {
+            return redirect()->to('dashboard')->with('error', 'Competition is not active');
+        }
+
         $request->validate([
             'image' => 'required|image|mimes:jpeg,png,jpg',
         ]);
