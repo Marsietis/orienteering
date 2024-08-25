@@ -35,7 +35,7 @@ class RegisteredUserController extends Controller
             'name' => 'required|string|max:50,unique:' . User::class,
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:users', new KnfEmailRule()],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
-            'members' => 'required|array|min:3|max:6',
+            'members' => 'required|array|min:3|max:5',
             'members.*' => 'string|max:50',
         ]);
 
