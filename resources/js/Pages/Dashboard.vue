@@ -2,7 +2,6 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import {Head, Link} from '@inertiajs/vue3';
 import CountdownTimer from '@/Components/CountdownTimer.vue';
-import SecondaryButton from "@/Components/SecondaryButton.vue";
 import {ref} from 'vue';
 
 const props = defineProps({
@@ -33,7 +32,7 @@ const getStatusClass = (status) => ({
 
     <AuthenticatedLayout>
         <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">Dashboard</h2>
+            <h2 class="font-semibold text-xl text-gray-800 leading-tight">VU SA KnF Orientacinės varžybos / VU SR KnF Orienteering competition</h2>
         </template>
 
         <div class="py-6">
@@ -82,7 +81,7 @@ const getStatusClass = (status) => ({
             </Link>
         </div>
 
-
+        <div class="flex justify-center text-4xl font-extrabold mt-8">Užduotys / Tasks:</div>
 
         <div class="py-12">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
