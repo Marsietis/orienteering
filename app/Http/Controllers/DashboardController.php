@@ -21,6 +21,11 @@ class DashboardController extends Controller
             ->count();
 
         $eventEndDateTime = Events::where('end_date', '>', now())->first();
+        $eventStartDateTime = Events::where('start_date', '<', now())->first();
+
+        if ($eventStartDateTime == null || $eventEndDateTime == null) {
+            $tasks = null;
+        }
 
         return Inertia::render('Dashboard', [
             'tasks' => $tasks,
