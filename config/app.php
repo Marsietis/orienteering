@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'Laravel'),
+    'name' => env('APP_NAME', 'VU SA KnF Orientacinės varžybos / VU SR KnF Orienteering competition'),
 
     /*
     |--------------------------------------------------------------------------
