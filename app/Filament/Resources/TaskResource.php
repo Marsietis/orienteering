@@ -34,7 +34,10 @@ class TaskResource extends Resource
                     ->numeric(),
                 Forms\Components\FileUpload::make('image_path')
                     ->image()
-                    ->directory('task-images')
+                    ->directory('task-images'),
+                Forms\Components\TextInput::make('solve_count')
+                    ->required()
+                    ->numeric(),
             ]);
     }
 
