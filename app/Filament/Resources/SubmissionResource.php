@@ -130,8 +130,8 @@ class SubmissionResource extends Resource
     {
         return $infolist
             ->schema([
+                Infolists\Components\TextEntry::make('task.title'),
                 Infolists\Components\TextEntry::make('user.name')->label('Team name'),
-                Infolists\Components\TextEntry::make('task.id')->label('Task ID'),
                 Infolists\Components\TextEntry::make('task.description')->label('Task Description'),
                 Infolists\Components\TextEntry::make('status')->badge()
                     ->color(fn(string $state): string => match ($state) {
