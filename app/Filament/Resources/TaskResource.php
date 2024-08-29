@@ -33,7 +33,7 @@ class TaskResource extends Resource
                     ->required()
                     ->numeric(),
                 Forms\Components\FileUpload::make('image_path')
-                    ->image()
+                    ->image()->visibility('public')->disk('public')
                     ->directory('task-images'),
                 Forms\Components\TextInput::make('solve_count')
                     ->required()
