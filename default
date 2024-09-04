@@ -8,6 +8,7 @@ server {
     server_name  example.com www.example.com;
     port_in_redirect off;
     proxy_set_header X-Forwarded-Proto https;
+    client_max_body_size 10M;
 
     location / {
         index  index.php index.html index.htm hostingstart.html;
