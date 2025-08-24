@@ -19,7 +19,7 @@ const isCompressing = ref(false);
 
 const compressImage = async (file) => {
     const options = {
-        maxSizeMB: 0.5,
+        maxSizeMB: 2,
         maxWidthOrHeight: 1920,
         useWebWorker: true,
         fileType: 'image/webp',
