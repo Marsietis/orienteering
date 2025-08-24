@@ -125,52 +125,57 @@ const clearImageInput = () => {
             </div>
 
             <form @submit.prevent="submit" class="space-y-6">
-                <!-- File Upload Area -->
-                <div class="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center hover:border-blue-400 transition-colors">
-                    <div class="space-y-4">
-                        <div class="flex flex-col items-center">
-                            <svg class="w-12 h-12 text-gray-400 mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
-                            </svg>
-                            <label for="image-upload" class="cursor-pointer">
-                                <span class="text-blue-600 font-medium hover:text-blue-800">Pasirinkite nuotrauką / Choose an image</span>
-                                <span class="text-gray-500"> arba nuvilkite / or drag and drop</span>
-                            </label>
-                            <p class="text-xs text-gray-500 mt-1">PNG, JPG, WebP up to 10MB</p>
-                        </div>
-                        
-                        <input
-                            id="image-upload"
-                            type="file"
-                            ref="imageInput"
-                            accept="image/*"
-                            @input="form.image = $event.target.files[0]"
-                            class="hidden"
-                        />
-                    </div>
-
-                    <!-- Selected File Info -->
-                    <div v-if="form.image" class="mt-4 p-4 bg-blue-50 rounded-lg border border-blue-200">
-                        <div class="flex items-center justify-between">
-                            <div class="flex items-center space-x-3">
-                                <div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
-                                    <svg class="w-5 h-5 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
-                                        <path fill-rule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clip-rule="evenodd"/>
+                <!-- File Upload Button -->
+                <div class="space-y-4">
+                    <label for="image-upload" class="block">
+                        <div class="w-full bg-blue-600 hover:bg-blue-700 active:bg-blue-800 text-white rounded-lg p-6 text-center cursor-pointer transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 active:translate-y-0">
+                            <div class="flex flex-col items-center space-y-3">
+                                <div class="w-16 h-16 bg-white bg-opacity-20 rounded-full flex items-center justify-center">
+                                    <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/>
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"/>
                                     </svg>
                                 </div>
-                                <div class="text-left">
-                                    <p class="text-sm font-medium text-gray-900">{{ form.image.name }}</p>
-                                    <p class="text-xs text-gray-500">{{ Math.round(form.image.size / 1024) }} KB</p>
+                                <div>
+                                    <h4 class="text-xl font-semibold text-white mb-1">Pasirinkite nuotrauką</h4>
+                                    <h4 class="text-xl font-semibold text-white mb-3">Choose an Image</h4>
+                                    <p class="text-blue-100 text-sm">PNG, JPG, WebP up to 10MB</p>
                                 </div>
                             </div>
-                            <button
-                                type="button"
-                                @click="clearImageInput"
-                                class="text-red-500 hover:text-red-700 font-medium text-sm"
-                            >
-                                Pašalinti / Remove
-                            </button>
                         </div>
+                    </label>
+                    
+                    <input
+                        id="image-upload"
+                        type="file"
+                        ref="imageInput"
+                        accept="image/*"
+                        @input="form.image = $event.target.files[0]"
+                        class="hidden"
+                    />
+                </div>
+
+                <!-- Selected File Info -->
+                <div v-if="form.image" class="p-4 bg-blue-50 rounded-lg border border-blue-200">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center space-x-3">
+                            <div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
+                                <svg class="w-5 h-5 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clip-rule="evenodd"/>
+                                </svg>
+                            </div>
+                            <div class="text-left">
+                                <p class="text-sm font-medium text-gray-900">{{ form.image.name }}</p>
+                                <p class="text-xs text-gray-500">{{ Math.round(form.image.size / 1024) }} KB</p>
+                            </div>
+                        </div>
+                        <button
+                            type="button"
+                            @click="clearImageInput"
+                            class="text-red-500 hover:text-red-700 font-medium text-sm"
+                        >
+                            Pašalinti / Remove
+                        </button>
                     </div>
                 </div>
 
