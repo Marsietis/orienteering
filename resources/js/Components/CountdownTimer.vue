@@ -54,6 +54,8 @@ export default {
             eventEnded: false,
             isStartingSoon: false,
             isEndingSoon: false,
+            hasEmittedStarted: false,
+            hasEmittedEnded: false,
         };
     },
     methods: {
@@ -61,31 +63,34 @@ export default {
             this.currentTime = new Date().getTime();
 
             if (this.currentTime < this.startTime) {
+                // Competition hasn't started yet
                 this.eventStarted = false;
+                this.eventEnded = false;
                 const timeLeft = this.startTime - this.currentTime;
-
                 this.isStartingSoon = timeLeft <= 1000 * 60 * 10;
-
-                if (timeLeft < 0) {
+                this.updateTimeValues(timeLeft);
+            } else if (this.currentTime >= this.startTime && this.currentTime < this.endTime) {
+                // Competition is active
+                if (!this.eventStarted && !this.hasEmittedStarted) {
                     this.eventStarted = true;
-                } else {
-                    this.updateTimeValues(timeLeft);
+                    this.hasEmittedStarted = true;
+                    this.$emit('event-started');
                 }
-            } else if (this.currentTime < this.endTime) {
                 this.eventStarted = true;
+                this.eventEnded = false;
                 const timeLeft = this.endTime - this.currentTime;
-
                 this.isEndingSoon = timeLeft <= 1000 * 60 * 10;
-
-                if (timeLeft < 0) {
-                    clearInterval(this.intervalId);
-                    this.eventEnded = true;
-                } else {
-                    this.updateTimeValues(timeLeft);
-                }
+                this.updateTimeValues(timeLeft);
             } else {
-                clearInterval(this.intervalId);
+                // Competition has ended
+                if (!this.eventEnded && !this.hasEmittedEnded) {
+                    this.eventEnded = true;
+                    this.hasEmittedEnded = true;
+                    clearInterval(this.intervalId);
+                    this.$emit('event-ended');
+                }
                 this.eventEnded = true;
+                this.eventStarted = false;
             }
         },
         updateTimeValues(timeLeft) {

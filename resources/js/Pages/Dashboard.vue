@@ -3,6 +3,7 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import {Head, Link} from '@inertiajs/vue3';
 import CountdownTimer from '@/Components/CountdownTimer.vue';
 import {ref} from 'vue';
+import {router} from '@inertiajs/vue3';
 
 const props = defineProps({
     tasks: Array,
@@ -25,6 +26,14 @@ const getStatusClass = (status) => ({
     'pending': 'bg-yellow-500',
     'rejected': 'bg-red-500',
 }[status] || 'bg-gray-500');
+
+const handleEventStarted = () => {
+    router.reload();
+};
+
+const handleEventEnded = () => {
+    router.reload();
+};
 </script>
 
 <template>
@@ -41,7 +50,12 @@ const getStatusClass = (status) => ({
             <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
                 <!-- Competition Timer Card -->
                 <div class="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl shadow-sm border border-blue-100 mb-8">
-                    <CountdownTimer :eventEndDateTime="eventEndDateTime" class="py-6"/>
+                    <CountdownTimer 
+                        :eventEndDateTime="eventEndDateTime" 
+                        @event-started="handleEventStarted"
+                        @event-ended="handleEventEnded"
+                        class="py-6"
+                    />
                 </div>
 
                 <!-- User Stats Card -->
