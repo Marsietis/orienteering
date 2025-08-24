@@ -35,25 +35,25 @@ const handleEventEnded = () => {
     router.reload();
 };
 
-// Helper function for Lithuanian point endings
+// Helper function for Lithuanian point endings (without number)
 const getPointsText = (points) => {
     if (points % 10 === 1 && points % 100 !== 11) {
-        return `${points} taškas`;
+        return `Taškas`;
     } else if ([2, 3, 4, 5, 6, 7, 8, 9].includes(points % 10) && ![12, 13, 14, 15, 16, 17, 18, 19].includes(points % 100)) {
-        return `${points} taškai`;
+        return `Taškai`;
     } else {
-        return `${points} taškų`;
+        return `Taškų`;
     }
 };
 
-// Helper function for Lithuanian task count endings
+// Helper function for Lithuanian task count endings (without number)
 const getTasksText = (count) => {
     if (count % 10 === 1 && count % 100 !== 11) {
-        return `Išspręsta ${count} užduotis`;
+        return `Išspręsta užduotis`;
     } else if ([2, 3, 4, 5, 6, 7, 8, 9].includes(count % 10) && ![12, 13, 14, 15, 16, 17, 18, 19].includes(count % 100)) {
-        return `Išspręstos ${count} užduotys`;
+        return `Išspręstos užduotys`;
     } else {
-        return `Išspręsta ${count} užduočių`;
+        return `Išspręsta užduočių`;
     }
 };
 </script>
