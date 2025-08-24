@@ -1,0 +1,9 @@
+# Compiled assets
+css/
+js/
+
+# Build artifacts
+hot
+
+# Generated storage links
+storage

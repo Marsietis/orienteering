@@ -47,7 +47,7 @@ class TasksController extends Controller
         }
 
         $request->validate([
-            'image' => 'required|image|mimes:jpeg,png,jpg|max:10240',
+            'image' => 'required|image|mimes:jpeg,png,jpg,webp|max:10240',
         ]);
 
         $imagePath = $request->file('image')->store('submissions', 'public');
