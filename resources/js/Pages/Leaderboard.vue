@@ -35,12 +35,12 @@ const getRankClass = (index) => {
 
 
 <template>
-    <Head title="Rezultatų lentelė / Leaderboard"/>
+    <Head title="Lyderių lentelė / Leaderboard"/>
 
     <AuthenticatedLayout>
         <template #header>
             <h2 class="text-2xl font-bold text-center text-gray-900 leading-tight">
-                VU SA KnF Rezultatų lentelė / VU SR KnF Leaderboard
+                VU SA KnF Orientacinės varžybos / VU SR KnF Orienteering Competition 
             </h2>
         </template>
 
@@ -48,8 +48,8 @@ const getRankClass = (index) => {
             <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
                 <!-- Page Header -->
                 <div class="text-center mb-8">
-                    <h1 class="text-3xl font-bold text-gray-900 mb-2">Rezultatų lentelė / Leaderboard</h1>
-                    <p class="text-gray-600">Komandų reitingas pagal surinktuosius taškus / Team ranking by points earned</p>
+                    <h1 class="text-3xl font-bold text-gray-900 mb-2">Rezultatai / Leaderboard</h1>
+                    <p class="text-gray-600">Komandų reitingas pagal surinktus taškus / Team ranking by points earned</p>
                 </div>
 
                 <!-- Refresh Button -->
@@ -98,7 +98,7 @@ const getRankClass = (index) => {
                                 <p class="text-sm text-gray-600">komanda / team</p>
                             </div>
                             <div class="text-sm text-gray-500">
-                                <span class="font-medium">Paskutinė užduotis / Last task:</span>
+                                <span class="font-medium">Paskutinė užduotis išspręsta / Last task solved:</span>
                                 {{ DateTime.fromISO(user.updated_at).toRelative() }}
                             </div>
                         </div>
@@ -121,7 +121,7 @@ const getRankClass = (index) => {
                                     Taškai / Points
                                 </th>
                                 <th scope="col" class="px-6 py-4 text-left text-sm font-semibold text-gray-900 uppercase tracking-wider">
-                                    Paskutinė užduotis / Last Task
+                                    Paskutinė užduotis išspręsta / Last task solved
                                 </th>
                             </tr>
                             </thead>
