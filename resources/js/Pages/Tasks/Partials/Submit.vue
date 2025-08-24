@@ -84,55 +84,142 @@ const clearImageInput = () => {
 </script>
 
 <template>
-    <div class="container mx-auto p-4 bg-white rounded shadow-xl">
-        <div
-            v-if="userSubmissions.length === 0 || userSubmissions.every(submission => submission.status !== 'pending' && submission.status !== 'approved')">
-            <div class="text-black text-xl my-4">Add a new submission</div>
-            <form @submit.prevent="submit" class="space-y-4">
+    <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+        <!-- Task Already Completed -->
+        <div v-if="userSubmissions.some(submission => submission.status === 'approved')" 
+             class="p-6 text-center">
+            <div class="flex flex-col items-center space-y-3">
+                <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center">
+                    <svg class="w-8 h-8 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                    </svg>
+                </div>
                 <div>
-                    <span class="relative inline-flex items-center">
+                    <h3 class="text-lg font-semibold text-green-800">Task Completed! 🎉</h3>
+                    <p class="text-green-600">Your solution has been approved and you've earned {{ task.points }} points.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Submission Under Review -->
+        <div v-else-if="userSubmissions.some(submission => submission.status === 'pending')" 
+             class="p-6 text-center">
+            <div class="flex flex-col items-center space-y-3">
+                <div class="w-16 h-16 bg-yellow-100 rounded-full flex items-center justify-center">
+                    <svg class="w-8 h-8 text-yellow-600" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"/>
+                    </svg>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold text-yellow-800">Under Review</h3>
+                    <p class="text-yellow-700">Your submission is being reviewed. Check back later.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Submit New Solution -->
+        <div v-else class="p-6">
+            <div class="text-center mb-6">
+                <h3 class="text-xl font-semibold text-gray-900 mb-2">Submit Your Solution</h3>
+                <p class="text-gray-600">Upload a photo of your solution to earn {{ task.points }} points</p>
+            </div>
+
+            <form @submit.prevent="submit" class="space-y-6">
+                <!-- File Upload Area -->
+                <div class="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center hover:border-blue-400 transition-colors">
+                    <div class="space-y-4">
+                        <div class="flex flex-col items-center">
+                            <svg class="w-12 h-12 text-gray-400 mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
+                            </svg>
+                            <label for="image-upload" class="cursor-pointer">
+                                <span class="text-blue-600 font-medium hover:text-blue-800">Choose an image</span>
+                                <span class="text-gray-500"> or drag and drop</span>
+                            </label>
+                            <p class="text-xs text-gray-500 mt-1">PNG, JPG, WebP up to 10MB</p>
+                        </div>
+                        
                         <input
+                            id="image-upload"
                             type="file"
                             ref="imageInput"
                             accept="image/*"
                             @input="form.image = $event.target.files[0]"
-                            class="text-sm text-gray-500 file:mr-2 file:py-1.5 file:px-3 file:rounded-full file:border-0 file:text-sm file:font-medium file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
+                            class="hidden"
                         />
-                        <div v-if="form.image" class="text-xs text-gray-600 mt-1">
-                            Selected: {{ form.image.name }} ({{ Math.round(form.image.size / 1024) }} KB)
+                    </div>
+
+                    <!-- Selected File Info -->
+                    <div v-if="form.image" class="mt-4 p-4 bg-blue-50 rounded-lg border border-blue-200">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center space-x-3">
+                                <div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
+                                    <svg class="w-5 h-5 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clip-rule="evenodd"/>
+                                    </svg>
+                                </div>
+                                <div class="text-left">
+                                    <p class="text-sm font-medium text-gray-900">{{ form.image.name }}</p>
+                                    <p class="text-xs text-gray-500">{{ Math.round(form.image.size / 1024) }} KB</p>
+                                </div>
+                            </div>
+                            <button
+                                type="button"
+                                @click="clearImageInput"
+                                class="text-red-500 hover:text-red-700 font-medium text-sm"
+                            >
+                                Remove
+                            </button>
                         </div>
-                        <button
-                            @click="clearImageInput"
-                            v-if="form.image"
-                            class="text-red-300 underline hover:text-red-100 ml-2">Clear
-                        </button>
-                    </span>
+                    </div>
                 </div>
 
-                <button 
-                    type="submit" 
-                    :disabled="isCompressing || form.processing"
-                    class="bg-blue-500 hover:bg-blue-600 disabled:bg-gray-400 disabled:cursor-not-allowed text-white font-medium py-2 px-4 rounded-xl transition-colors"
+                <!-- Error Message -->
+                <div v-if="form.errorMessage" class="p-4 bg-red-50 border border-red-200 rounded-lg">
+                    <div class="flex items-center space-x-2">
+                        <svg class="w-5 h-5 text-red-500" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/>
+                        </svg>
+                        <p class="text-red-700 font-medium">{{ form.errorMessage }}</p>
+                    </div>
+                </div>
+
+                <!-- Success Message -->
+                <Transition
+                    enter-active-class="transition ease-out duration-300"
+                    enter-from-class="transform opacity-0 scale-95"
+                    enter-to-class="transform opacity-100 scale-100"
+                    leave-active-class="transition ease-in duration-200"
+                    leave-from-class="transform opacity-100 scale-100"
+                    leave-to-class="transform opacity-0 scale-95"
                 >
-                    <span v-if="isCompressing">Uploading...</span>
-                    <span v-else-if="form.processing">Uploading...</span>
-                    <span v-else>Submit Image</span>
-                </button>
-
-                <!-- Display error message if it exists -->
-                <p v-if="form.errorMessage" class="text-red-500 mt-2">{{ form.errorMessage }}</p>
-
-                <Transition>
-                    <p v-if="form.recentlySuccessful" class="text-xl text-green-600">Saved.</p>
+                    <div v-if="form.recentlySuccessful" class="p-4 bg-green-50 border border-green-200 rounded-lg">
+                        <div class="flex items-center space-x-2">
+                            <svg class="w-5 h-5 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                            </svg>
+                            <p class="text-green-700 font-medium">Solution submitted successfully!</p>
+                        </div>
+                    </div>
                 </Transition>
+
+                <!-- Submit Button -->
+                <div class="flex justify-center">
+                    <button 
+                        type="submit" 
+                        :disabled="!form.image || isCompressing || form.processing"
+                        class="px-8 py-3 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-300 disabled:cursor-not-allowed text-white font-semibold rounded-lg transition-all duration-200 flex items-center space-x-2 min-w-[180px] justify-center"
+                    >
+                        <svg v-if="isCompressing || form.processing" class="animate-spin w-5 h-5" fill="none" viewBox="0 0 24 24">
+                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                        </svg>
+                        <span v-if="isCompressing">Processing Image...</span>
+                        <span v-else-if="form.processing">Submitting...</span>
+                        <span v-else>Submit Solution</span>
+                    </button>
+                </div>
             </form>
-        </div>
-        <div v-else-if="userSubmissions.some(submission => submission.status === 'pending')"
-             class="text-gray-600 uppercase text-center font-bold text-xl">
-            Your submission is waiting for review.
-        </div>
-        <div v-else class="text-green-600 uppercase text-center font-bold text-xl">
-            Task solved
         </div>
     </div>
 </template>
