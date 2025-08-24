@@ -34,6 +34,28 @@ const handleEventStarted = () => {
 const handleEventEnded = () => {
     router.reload();
 };
+
+// Helper function for Lithuanian point endings
+const getPointsText = (points) => {
+    if (points % 10 === 1 && points % 100 !== 11) {
+        return `${points} taškas`;
+    } else if ([2, 3, 4, 5, 6, 7, 8, 9].includes(points % 10) && ![12, 13, 14, 15, 16, 17, 18, 19].includes(points % 100)) {
+        return `${points} taškai`;
+    } else {
+        return `${points} taškų`;
+    }
+};
+
+// Helper function for Lithuanian task count endings
+const getTasksText = (count) => {
+    if (count % 10 === 1 && count % 100 !== 11) {
+        return `Išspręsta ${count} užduotis`;
+    } else if ([2, 3, 4, 5, 6, 7, 8, 9].includes(count % 10) && ![12, 13, 14, 15, 16, 17, 18, 19].includes(count % 100)) {
+        return `Išspręstos ${count} užduotys`;
+    } else {
+        return `Išspręsta ${count} užduočių`;
+    }
+};
 </script>
 
 <template>
@@ -74,7 +96,7 @@ const handleEventEnded = () => {
                                     </svg>
                                     <div class="text-3xl font-bold text-indigo-600">{{ user.points }}</div>
                                 </div>
-                                <div class="text-sm text-gray-700 font-medium">Taškai / Points</div>
+                                <div class="text-sm text-gray-700 font-medium">{{ getPointsText(user.points) }} / Points</div>
                             </div>
                             <div class="text-center p-6 bg-gradient-to-r from-green-50 to-emerald-50 rounded-lg">
                                 <div class="flex items-center justify-center mb-3">
@@ -83,7 +105,7 @@ const handleEventEnded = () => {
                                     </svg>
                                     <div class="text-3xl font-bold text-green-600">{{ solvedTasksCount }}</div>
                                 </div>
-                                <div class="text-sm text-gray-700 font-medium">Išspręsta užduočių / Tasks Solved</div>
+                                <div class="text-sm text-gray-700 font-medium">{{ getTasksText(solvedTasksCount) }} / Tasks Solved</div>
                             </div>
                         </div>
                     </div>

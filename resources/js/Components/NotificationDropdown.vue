@@ -37,7 +37,7 @@
                     </div>
                     <div v-if="unreadCount > 0" class="flex items-center space-x-2">
                         <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
-                            {{ unreadCount }} nauji / new
+                            {{ getNotificationsText(unreadCount) }} / new
                         </span>
                     </div>
                 </div>
@@ -348,6 +348,17 @@ const formatDate = (dateString) => {
         hour: '2-digit',
         minute: '2-digit'
     });
+};
+
+// Helper function for Lithuanian notification count endings
+const getNotificationsText = (count) => {
+    if (count % 10 === 1 && count % 100 !== 11) {
+        return `${count} naujas`;
+    } else if ([2, 3, 4, 5, 6, 7, 8, 9].includes(count % 10) && ![12, 13, 14, 15, 16, 17, 18, 19].includes(count % 100)) {
+        return `${count} nauji`;
+    } else {
+        return `${count} naujų`;
+    }
 };
 
 const handleClickOutside = (event) => {

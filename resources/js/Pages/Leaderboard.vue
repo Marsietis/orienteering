@@ -31,6 +31,17 @@ const getRankClass = (index) => {
     if (index === 2) return 'bg-gradient-to-r from-orange-100 to-amber-100 border border-orange-200';
     return 'bg-white border border-gray-200';
 };
+
+// Helper function for Lithuanian point endings
+const getPointsText = (points) => {
+    if (points % 10 === 1 && points % 100 !== 11) {
+        return `${points} taškas`;
+    } else if ([2, 3, 4, 5, 6, 7, 8, 9].includes(points % 10) && ![12, 13, 14, 15, 16, 17, 18, 19].includes(points % 100)) {
+        return `${points} taškai`;
+    } else {
+        return `${points} taškų`;
+    }
+};
 </script>
 
 
@@ -90,7 +101,7 @@ const getRankClass = (index) => {
                                 </div>
                                 <div class="text-right">
                                     <div class="text-2xl font-bold text-indigo-600">{{ user.points }}</div>
-                                    <div class="text-sm text-gray-600">taškai / points</div>
+                                    <div class="text-sm text-gray-600">{{ getPointsText(user.points) }} / points</div>
                                 </div>
                             </div>
                             <div class="mb-3">
