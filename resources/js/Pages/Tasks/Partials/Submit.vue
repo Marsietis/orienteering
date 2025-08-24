@@ -2,6 +2,7 @@
 import { ref } from 'vue';
 import { useForm } from "@inertiajs/vue3";
 import InputError from "@/Components/InputError.vue";
+import imageCompression from 'browser-image-compression';
 
 const imageInput = ref(null);
 const props = defineProps({
@@ -14,27 +15,70 @@ const form = useForm({
     errorMessage: '', // Add this line to handle error messages
 });
 
-const submit = () => {
+const isCompressing = ref(false);
+
+const compressImage = async (file) => {
+    const options = {
+        maxSizeMB: 0.5,
+        maxWidthOrHeight: 1920,
+        useWebWorker: true,
+        fileType: 'image/webp',
+        initialQuality: 0.7
+    };
+
+    try {
+        console.log('Starting compression with options:', options);
+        const compressedFile = await imageCompression(file, options);
+        console.log('Compression completed successfully');
+        return compressedFile;
+    } catch (error) {
+        console.error('Error compressing image:', error);
+        // If compression fails, fall back to original file
+        console.warn('Falling back to original file due to compression error');
+        return file;
+    }
+};
+
+const submit = async () => {
     if (!form.image) {
-        form.errorMessage = 'Please select an image before submitting.'; // Set the error message
+        form.errorMessage = 'Please select an image before submitting.';
         return;
     }
-    form.errorMessage = ''; // Clear the error message if an image is selected
-    const formData = new FormData();
-    formData.append('image', imageInput.value.files[0]);  // Add image file to FormData
+    
+    form.errorMessage = '';
+    isCompressing.value = true;
+    
+    try {
+        const originalFile = imageInput.value.files[0];
+        console.log('Original file:', originalFile.name, originalFile.size, 'bytes', originalFile.type);
+        
+        const compressedFile = await compressImage(originalFile);
+        console.log('Compressed file:', compressedFile.name, compressedFile.size, 'bytes', compressedFile.type);
+        
+        // Update form with compressed file
+        form.image = compressedFile;
 
-    form.post(route('tasks.submissions.store', props.task.id), {
-        onSuccess: () => clearImageInput(),
-        data: formData,  // Pass FormData with the image
-        preserveScroll: true,
-    });
+        form.post(route('tasks.submissions.store', props.task.id), {
+            onSuccess: () => clearImageInput(),
+            forceFormData: true,
+            preserveScroll: true,
+            onFinish: () => {
+                isCompressing.value = false;
+            }
+        });
+    } catch (error) {
+        console.error('Compression error:', error);
+        form.errorMessage = 'Error processing image. Please try again.';
+        isCompressing.value = false;
+    }
 };
 
 const clearImageInput = () => {
-    form.image = null;  // Clear the file in the form data
-    form.errorMessage = ''; // Clear the error message
+    form.image = null;
+    form.errorMessage = '';
+    isCompressing.value = false;
     if (imageInput.value) {
-        imageInput.value.value = null; // Clear the file input element
+        imageInput.value.value = null;
     }
 };
 </script>
@@ -54,6 +98,9 @@ const clearImageInput = () => {
                             @input="form.image = $event.target.files[0]"
                             class="text-sm text-gray-500 file:mr-2 file:py-1.5 file:px-3 file:rounded-full file:border-0 file:text-sm file:font-medium file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
                         />
+                        <div v-if="form.image" class="text-xs text-gray-600 mt-1">
+                            Selected: {{ form.image.name }} ({{ Math.round(form.image.size / 1024) }} KB)
+                        </div>
                         <button
                             @click="clearImageInput"
                             v-if="form.image"
@@ -62,8 +109,14 @@ const clearImageInput = () => {
                     </span>
                 </div>
 
-                <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-4 rounded-xl">
-                    Submit Image
+                <button 
+                    type="submit" 
+                    :disabled="isCompressing || form.processing"
+                    class="bg-blue-500 hover:bg-blue-600 disabled:bg-gray-400 disabled:cursor-not-allowed text-white font-medium py-2 px-4 rounded-xl transition-colors"
+                >
+                    <span v-if="isCompressing">Compressing...</span>
+                    <span v-else-if="form.processing">Uploading...</span>
+                    <span v-else>Submit Image</span>
                 </button>
 
                 <!-- Display error message if it exists -->
