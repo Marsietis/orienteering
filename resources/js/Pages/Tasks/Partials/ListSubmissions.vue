@@ -9,8 +9,8 @@ defineProps({
 <template>
     <div v-if="userSubmissions.length > 0" class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
         <div class="p-6 border-b border-gray-200">
-            <h3 class="text-xl font-semibold text-gray-900">Submission History</h3>
-            <p class="text-gray-600 mt-1">Track the progress of your submissions</p>
+            <h3 class="text-xl font-semibold text-gray-900">Pateiktų sprendimų istorija / Submission History</h3>
+            <p class="text-gray-600 mt-1">Sekite sprendimų pateikimo eigą / Track the progress of your submissions</p>
         </div>
         
         <div class="divide-y divide-gray-200">
@@ -22,7 +22,7 @@ defineProps({
                     <div class="flex-shrink-0">
                         <div class="w-full lg:w-48 aspect-video lg:aspect-square">
                             <img :src="submission.image_path" 
-                                 alt="Your submission" 
+                                 alt="Jūsų sprendimas / Your submission" 
                                  class="w-full h-full object-cover rounded-lg border border-gray-200 shadow-sm"/>
                         </div>
                     </div>
@@ -44,7 +44,9 @@ defineProps({
                                               'text-red-700': submission.status === 'rejected',
                                               'text-yellow-700': submission.status === 'pending'
                                           }">
-                                        {{ submission.status }}
+                                        <span v-if="submission.status === 'approved'">PATVIRTINTA / APPROVED</span>
+                                        <span v-else-if="submission.status === 'rejected'">ATMESTA / REJECTED</span>
+                                        <span v-else>LAUKIAMA / PENDING</span>
                                     </span>
                                 </div>
                             </div>
@@ -54,7 +56,7 @@ defineProps({
                                 <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                                     <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"/>
                                 </svg>
-                                <span>Submitted {{ DateTime.fromISO(submission.created_at).toRelative() }}</span>
+                                <span>Pateikta / Submitted {{ DateTime.fromISO(submission.created_at).toRelative() }}</span>
                             </div>
                         </div>
 
@@ -87,14 +89,14 @@ defineProps({
                                            'text-red-800': submission.status === 'rejected',
                                            'text-yellow-800': submission.status === 'pending'
                                        }">
-                                        <span v-if="submission.status === 'approved'">Solution Approved!</span>
-                                        <span v-else-if="submission.status === 'rejected'">Solution Needs Improvement</span>
-                                        <span v-else>Under Review</span>
+                                        <span v-if="submission.status === 'approved'">Sprendimas patvirtintas! / Solution Approved!</span>
+                                        <span v-else-if="submission.status === 'rejected'">Sprendimas turi būti pagerinta / Solution Needs Improvement</span>
+                                        <span v-else>Peržiūrima / Under Review</span>
                                     </p>
                                     
                                     <!-- Comments -->
                                     <div v-if="submission.comments" class="mt-2">
-                                        <p class="text-sm font-medium text-gray-700 mb-1">Feedback:</p>
+                                        <p class="text-sm font-medium text-gray-700 mb-1">Atsiliepimas / Feedback:</p>
                                         <p class="text-sm text-gray-600 italic">"{{ submission.comments }}"</p>
                                     </div>
                                     
@@ -105,9 +107,9 @@ defineProps({
                                            'text-red-700': submission.status === 'rejected',
                                            'text-yellow-700': submission.status === 'pending'
                                        }">
-                                        <span v-if="submission.status === 'approved'">Great work! Your solution has been approved.</span>
-                                        <span v-else-if="submission.status === 'rejected'">Please review and try again with a different approach.</span>
-                                        <span v-else>Your submission is being reviewed. Please check back later.</span>
+                                        <span v-if="submission.status === 'approved'">Puikus darbas! Jūsų sprendimas patvirtintas. / Great work! Your solution has been approved.</span>
+                                        <span v-else-if="submission.status === 'rejected'">Peržiūrėkite ir bandykite kitaip. / Please review and try again with a different approach.</span>
+                                        <span v-else>Jūsų sprendimas peržiūrimas. Pabandykite vėliau. / Your submission is being reviewed. Please check back later.</span>
                                     </p>
                                 </div>
                             </div>

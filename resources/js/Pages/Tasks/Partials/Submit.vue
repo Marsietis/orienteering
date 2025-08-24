@@ -95,8 +95,8 @@ const clearImageInput = () => {
                     </svg>
                 </div>
                 <div>
-                    <h3 class="text-lg font-semibold text-green-800">Task Completed! 🎉</h3>
-                    <p class="text-green-600">Your solution has been approved and you've earned {{ task.points }} points.</p>
+                    <h3 class="text-lg font-semibold text-green-800">Užduotis išspręsta! / Task Completed! 🎉</h3>
+                    <p class="text-green-600">Jūsų sprendimas patvirtintas ir gaus {{ task.points }} taškų / Your solution has been approved and you've earned {{ task.points }} points.</p>
                 </div>
             </div>
         </div>
@@ -111,8 +111,8 @@ const clearImageInput = () => {
                     </svg>
                 </div>
                 <div>
-                    <h3 class="text-lg font-semibold text-yellow-800">Under Review</h3>
-                    <p class="text-yellow-700">Your submission is being reviewed. Check back later.</p>
+                    <h3 class="text-lg font-semibold text-yellow-800">Peržiūrima / Under Review</h3>
+                    <p class="text-yellow-700">Jūsų sprendimas peržiūrimas. Pabandykite vėliau / Your submission is being reviewed. Check back later.</p>
                 </div>
             </div>
         </div>
@@ -120,8 +120,8 @@ const clearImageInput = () => {
         <!-- Submit New Solution -->
         <div v-else class="p-6">
             <div class="text-center mb-6">
-                <h3 class="text-xl font-semibold text-gray-900 mb-2">Submit Your Solution</h3>
-                <p class="text-gray-600">Upload a photo of your solution to earn {{ task.points }} points</p>
+                <h3 class="text-xl font-semibold text-gray-900 mb-2">Pateikti sprendimą / Submit Your Solution</h3>
+                <p class="text-gray-600">Įkelkite sprendimo nuotrauką ir gaukite {{ task.points }} taškų / Upload a photo of your solution to earn {{ task.points }} points</p>
             </div>
 
             <form @submit.prevent="submit" class="space-y-6">
@@ -133,8 +133,8 @@ const clearImageInput = () => {
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
                             </svg>
                             <label for="image-upload" class="cursor-pointer">
-                                <span class="text-blue-600 font-medium hover:text-blue-800">Choose an image</span>
-                                <span class="text-gray-500"> or drag and drop</span>
+                                <span class="text-blue-600 font-medium hover:text-blue-800">Pasirinkite nuotrauką / Choose an image</span>
+                                <span class="text-gray-500"> arba nuvilkite / or drag and drop</span>
                             </label>
                             <p class="text-xs text-gray-500 mt-1">PNG, JPG, WebP up to 10MB</p>
                         </div>
@@ -168,7 +168,7 @@ const clearImageInput = () => {
                                 @click="clearImageInput"
                                 class="text-red-500 hover:text-red-700 font-medium text-sm"
                             >
-                                Remove
+                                Pašalinti / Remove
                             </button>
                         </div>
                     </div>
@@ -198,7 +198,7 @@ const clearImageInput = () => {
                             <svg class="w-5 h-5 text-green-500" fill="currentColor" viewBox="0 0 20 20">
                                 <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
                             </svg>
-                            <p class="text-green-700 font-medium">Solution submitted successfully!</p>
+                            <p class="text-green-700 font-medium">Sprendimas sėkmingai pateiktas! / Solution submitted successfully!</p>
                         </div>
                     </div>
                 </Transition>
@@ -214,9 +214,9 @@ const clearImageInput = () => {
                             <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                             <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                         </svg>
-                        <span v-if="isCompressing">Processing Image...</span>
-                        <span v-else-if="form.processing">Submitting...</span>
-                        <span v-else>Submit Solution</span>
+                        <span v-if="isCompressing">Apdorojama nuotrauka... / Processing Image...</span>
+                        <span v-else-if="form.processing">Pateikiama... / Submitting...</span>
+                        <span v-else>Pateikti sprendimą / Submit Solution</span>
                     </button>
                 </div>
             </form>
