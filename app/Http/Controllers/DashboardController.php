@@ -20,10 +20,9 @@ class DashboardController extends Controller
             ->where('status', 'approved')
             ->count();
 
-        $eventEndDateTime = Events::where('end_date', '>', now())->first();
-        $eventStartDateTime = Events::where('start_date', '<', now())->first();
+        $currentEvent = Events::where('end_date', '>', now())->first();
 
-        if ($eventStartDateTime == null || $eventEndDateTime == null) {
+        if ($currentEvent == null || now() < $currentEvent->start_date) {
             $tasks = null;
         }
 
@@ -31,7 +30,10 @@ class DashboardController extends Controller
             'tasks' => $tasks,
             'solvedTasksCount' => $solvedTasksCount,
             'user' => $user,
-            'eventEndDateTime' => $eventEndDateTime,
+            'eventEndDateTime' => $currentEvent ? [
+                'start_date' => $currentEvent->start_date->toISOString(),
+                'end_date' => $currentEvent->end_date->toISOString(),
+            ] : null,
         ]);
     }
 }

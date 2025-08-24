@@ -30,17 +30,17 @@ const showingNavigationDropdown = ref(false);
                             <!-- Navigation Links -->
                             <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                                 <NavLink :href="route('welcome')">
-                                    Home
+                                    Pradžia / Home
                                 </NavLink>
                             </div>
                             <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                                 <NavLink :href="route('dashboard')" :active="route().current('dashboard')">
-                                    Dashboard
+                                    Skydelis / Dashboard
                                 </NavLink>
                             </div>
                             <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                                 <NavLink :href="route('leaderboard')" :active="route().current('leaderboard')">
-                                    Leaderboard
+                                    Lyderių lenta / Leaderboard
                                 </NavLink>
                             </div>
                         </div>
@@ -74,9 +74,9 @@ const showingNavigationDropdown = ref(false);
                                     </template>
 
                                     <template #content>
-                                        <DropdownLink :href="route('profile.edit')"> Profile</DropdownLink>
+                                        <DropdownLink :href="route('profile.edit')">Profilis / Profile</DropdownLink>
                                         <DropdownLink :href="route('logout')" method="post" as="button">
-                                            Log Out
+                                            Atsijungti / Log Out
                                         </DropdownLink>
                                     </template>
                                 </Dropdown>
@@ -123,13 +123,13 @@ const showingNavigationDropdown = ref(false);
                 >
                     <div class="pt-2 pb-3 space-y-1">
                         <ResponsiveNavLink :href="route('welcome')">
-                            Home
+                            Pradžia / Home
                         </ResponsiveNavLink>
                         <ResponsiveNavLink :href="route('dashboard')" :active="route().current('dashboard')">
-                            Dashboard
+                            Skydelis / Dashboard
                         </ResponsiveNavLink>
                         <ResponsiveNavLink :href="route('leaderboard')" :active="route().current('leaderboard')">
-                            Leaderboard
+                            Lyderių lenta / Leaderboard
                         </ResponsiveNavLink>
                     </div>
 
@@ -143,9 +143,9 @@ const showingNavigationDropdown = ref(false);
                         </div>
 
                         <div class="mt-3 space-y-1">
-                            <ResponsiveNavLink :href="route('profile.edit')"> Profile</ResponsiveNavLink>
+                            <ResponsiveNavLink :href="route('profile.edit')">Profilis / Profile</ResponsiveNavLink>
                             <ResponsiveNavLink :href="route('logout')" method="post" as="button">
-                                Log Out
+                                Atsijungti / Log Out
                             </ResponsiveNavLink>
                         </div>
                     </div>

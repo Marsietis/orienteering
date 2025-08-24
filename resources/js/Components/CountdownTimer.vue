@@ -1,20 +1,32 @@
 <template>
     <div class="countdown-container">
-        <p v-if="!eventEnded && !eventStarted" :class="{ 'countdown-starting-soon': isStartingSoon }">
-            COMPETITION STARTS IN:
-            <span class="countdown-time">
-                <span v-if="days > 0">{{ days }}d </span>
-                {{ hours }}h {{ minutes }}m {{ seconds }}s
-            </span>
-        </p>
-        <p v-if="!eventEnded && eventStarted" :class="{ 'countdown-ending-soon': isEndingSoon }">
-            COMPETITION ENDS IN:
-            <span class="countdown-time">
-                <span v-if="days > 0">{{ days }}d </span>
-                {{ hours }}h {{ minutes }}m {{ seconds }}s
-            </span>
-        </p>
-        <p v-if="eventEnded" class="ended-message">VARŽYBOS BAIGĖSI / COMPETITION ENDED</p>
+        <!-- Competition Starting Soon -->
+        <div v-if="!eventEnded && !eventStarted" class="text-center">
+            <h3 class="text-lg font-medium text-gray-700 mb-3">
+                Iki varžybų pradžios liko / Competition starts in:
+            </h3>
+            <div class="text-3xl font-bold text-green-600">
+                <span v-if="days > 0">{{ days }}d </span>{{ hours }}h {{ minutes }}m {{ seconds }}s
+            </div>
+        </div>
+
+        <!-- Competition Active -->
+        <div v-if="!eventEnded && eventStarted" class="text-center">
+            <h3 class="text-lg font-medium text-gray-700 mb-3">
+                Iki varžybų pabaigos liko / Competition ends in:
+            </h3>
+            <div class="text-3xl font-bold text-orange-600">
+                <span v-if="days > 0">{{ days }}d </span>{{ hours }}h {{ minutes }}m {{ seconds }}s
+            </div>
+        </div>
+
+        <!-- Competition Ended -->
+        <div v-if="eventEnded" class="text-center">
+            <h3 class="text-xl font-bold text-red-600 mb-2">
+                Varžybos baigėsi / Competition ended
+            </h3>
+            <p class="text-gray-600">Ačiū už dalyvavimą! / Thank you for participating!</p>
+        </div>
     </div>
 </template>
 
@@ -95,48 +107,6 @@ export default {
 
 <style scoped>
 .countdown-container {
-    text-align: center;
     padding: 20px;
-}
-
-p {
-    font-size: 1.5em;
-    margin: 0;
-    transition: color 0.5s ease, transform 0.5s ease;
-    line-height: 1.4;
-}
-
-.countdown-time {
-    display: block;
-    font-size: 2em;
-    font-weight: bold;
-}
-
-.countdown-starting-soon {
-    color: #4caf50; /* Green */
-    animation: pulse 1s infinite;
-}
-
-.countdown-ending-soon {
-    color: #f44336; /* Red */
-    animation: pulse 1s infinite;
-}
-
-.ended-message {
-    font-size: 1.5em;
-    color: #f44336; /* Red */
-    font-weight: bold;
-}
-
-@keyframes pulse {
-    0% {
-        transform: scale(1);
-    }
-    50% {
-        transform: scale(1.1);
-    }
-    100% {
-        transform: scale(1);
-    }
 }
 </style>
