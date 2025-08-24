@@ -36,12 +36,12 @@ const showingNavigationDropdown = ref(false);
                             </div>
                             <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                                 <NavLink :href="route('dashboard')" :active="route().current('dashboard')">
-                                    Skydelis / Dashboard
+                                    Varžybos / Competition
                                 </NavLink>
                             </div>
                             <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                                 <NavLink :href="route('leaderboard')" :active="route().current('leaderboard')">
-                                    Lyderių lenta / Leaderboard
+                                    Lyderių lentelė / Leaderboard
                                 </NavLink>
                             </div>
                         </div>
