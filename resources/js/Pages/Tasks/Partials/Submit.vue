@@ -114,7 +114,7 @@ const clearImageInput = () => {
                     :disabled="isCompressing || form.processing"
                     class="bg-blue-500 hover:bg-blue-600 disabled:bg-gray-400 disabled:cursor-not-allowed text-white font-medium py-2 px-4 rounded-xl transition-colors"
                 >
-                    <span v-if="isCompressing">Compressing...</span>
+                    <span v-if="isCompressing">Uploading...</span>
                     <span v-else-if="form.processing">Uploading...</span>
                     <span v-else>Submit Image</span>
                 </button>
