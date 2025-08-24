@@ -69,12 +69,12 @@ const submit = () => {
 
 <template>
     <GuestLayout>
-        <Head title="Register"/>
+        <Head title="Registracija / Register"/>
 
         <form @submit.prevent="nextStep">
             <div v-if="step === 1">
                 <div>
-                    <InputLabel for="name" value="Team name"/>
+                    <InputLabel for="name" value="Komandos pavadinimas / Team name"/>
 
                     <TextInput
                         id="name"
@@ -84,13 +84,14 @@ const submit = () => {
                         required
                         autofocus
                         autocomplete="name"
+                        placeholder="Team name that'll go down in history"
                     />
 
                     <InputError class="mt-2" :message="form.errors.name"/>
                 </div>
 
                 <div class="mt-4">
-                    <InputLabel for="email" value="Student email (f.e. slagbaumas.algis@knf.stud.vu.lt)"/>
+                    <InputLabel for="email" value="Studentinis el. paštas / Student's email"/>
 
                     <TextInput
                         id="email"
@@ -99,13 +100,14 @@ const submit = () => {
                         v-model="form.email"
                         required
                         autocomplete="username"
+                        placeholder="slagbaumas.algis@knf.stud.vu.lt"
                     />
 
                     <InputError class="mt-2" :message="form.errors.email"/>
                 </div>
 
                 <div class="mt-4">
-                    <InputLabel for="password" value="Password"/>
+                    <InputLabel for="password" value="Slaptažodis / Password"/>
 
                     <TextInput
                         id="password"
@@ -114,13 +116,14 @@ const submit = () => {
                         v-model="form.password"
                         required
                         autocomplete="new-password"
+                        placeholder="********"
                     />
 
                     <InputError class="mt-2" :message="form.errors.password"/>
                 </div>
 
                 <div class="mt-4">
-                    <InputLabel for="password_confirmation" value="Confirm Password"/>
+                    <InputLabel for="password_confirmation" value="Patvirtinti slaptažodį / Confirm Password"/>
 
                     <TextInput
                         id="password_confirmation"
@@ -129,6 +132,7 @@ const submit = () => {
                         v-model="form.password_confirmation"
                         required
                         autocomplete="new-password"
+                        placeholder="********"
                     />
 
                     <InputError class="mt-2" :message="form.errors.password_confirmation"/>
@@ -139,17 +143,17 @@ const submit = () => {
                         :href="route('login')"
                         class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                     >
-                        Already registered?
+                        Jau turite paskyrą? / Already registered?
                     </Link>
 
                     <PrimaryButton class="ms-4" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
-                        Next
+                        Toliau / Next
                     </PrimaryButton>
                 </div>
             </div>
 
             <div v-if="step === 2">
-                <InputLabel for="newMemberName" value="Team member's name"/>
+                <InputLabel for="newMemberName" value="Komandos nario vardas ir pavardė / Team member's name and surname"/>
                 <div class="flex items-center">
 
                     <TextInput
@@ -157,23 +161,24 @@ const submit = () => {
                         type="text"
                         class="mt-1 block w-full"
                         v-model="newMemberName"
+                        placeholder="Šlagbaumas Algis"
                     />
 
                     <SecondaryButton type="button" class="mt-1 ml-2" @click="addMember">
-                        + Add Member
+                        + Pridėti narį / Add Member
                     </SecondaryButton>
                 </div>
 
                 <InputError class="mt-2" :message="form.errors.members"/>
 
                 <div class="mt-4">
-                    <h3>Team Members</h3>
+                    <h3 class="font-medium text-gray-900">Komandos nariai / Team Members</h3>
                     <ul>
                         <li v-for="(member, index) in form.members" :key="index">
                             {{ member }}
                             <a @click="removeMember(index)"
-                               class="text-red-500 hover:text-red-600 hover:underline ml-2">
-                                Remove
+                               class="text-red-500 hover:text-red-600 hover:underline ml-2 cursor-pointer">
+                                Pašalinti / Remove
                             </a>
                         </li>
                     </ul>
@@ -181,11 +186,11 @@ const submit = () => {
 
                 <div class="flex items-center justify-between mt-4">
                     <SecondaryButton type="button" class="me-4" @click="previousStep">
-                        Previous
+                        Atgal / Previous
                     </SecondaryButton>
 
                     <PrimaryButton class="ms-4" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
-                        Register
+                        Registruotis / Register
                     </PrimaryButton>
                 </div>
             </div>
