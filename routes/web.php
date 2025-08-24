@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LeaderboardController;
+use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TasksController;
 use Illuminate\Foundation\Application;
@@ -25,6 +26,12 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    Route::get('/api/notifications', [NotificationController::class, 'index']);
+    Route::post('/api/notifications/{id}/read', [NotificationController::class, 'markAsRead']);
+    Route::post('/api/notifications/read-all', [NotificationController::class, 'markAllAsRead']);
+    Route::delete('/api/notifications/clear-all', [NotificationController::class, 'clearAll']);
+    Route::get('/api/submission/{id}/task', [NotificationController::class, 'getSubmissionTask']);
 });
 
-require __DIR__ . '/auth.php';
+require __DIR__.'/auth.php';
