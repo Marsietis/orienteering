@@ -47,9 +47,6 @@ function handleImageError() {
                     <p>Prieš pradėdami žaisti, susipažinkite su sąlygomis, kurias privalote įgyvendinti visose užduotyse. Užduotys, kurių
                         atsakymuose šios sąlygos nebus įgyvendintos, žaidimo vertintojai vertins 0 taškų.</p>
                     <ul class="list-disc list-inside space-y-2">
-                        <li>Kiekvienoje nuotraukoje <b>privaloma laikyti batoną</b>. (Pavyzdys pateiktas žemiau esančioje
-                            nuotraukoje.) Batonas privalo būti tikras, batonų, rodomų telefone, neužskaitysime
-                        </li>
                         <li>Visose įkeltose nuotraukose privalo būti matomas <b>TAS PATS KOMANDOS NARYS</b>. Nuotraukose,
                             kuriose yra kitas žmogus - neužskaitysime. Pastebėjus sukčiavimą komanda bus diskvalifikuota.
                         </li>
@@ -63,14 +60,11 @@ function handleImageError() {
                     <p>Hello, participant!</p>
                     <p>Before you start playing, please read the conditions that you must meet in all the tasks. Any task that does not meet these conditions will be scored 0 points by the evaluators.</p>
                     <ul class="list-disc list-inside space-y-2">
-                        <li>You must <b>hold a baguette</b> in each photo. (An example is shown in the photo below.) The baguette must be real, baguettes shown on the phone will not be counted.</li>
                         <li>All uploaded photos must feature <b>THE SAME TEAM MEMBER</b>. We will not credit photos that include another person. If cheating is detected the team will be disqualified.</li>
                     </ul>
                 </div>
                 <p class="mt-4">Submissions will be accepted until 19:30</p>
                 <p class="mt-2">Good luck!</p>
-                <img src="/storage/example.png" alt="Batonas" class="mx-auto mt-4 max-w-full"/>
-
                 <div class="flex justify-center mt-6">
                     <a :href="route('register')">
                         <button
@@ -82,7 +76,7 @@ function handleImageError() {
             </main>
 
             <footer class="mt-6 sm:mt-10 text-center text-sm text-gray-500">
-                2024 VUSA KnF
+                2025 VU SA KnF
             </footer>
         </div>
     </div>
